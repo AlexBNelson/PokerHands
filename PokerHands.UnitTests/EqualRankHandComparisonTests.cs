@@ -1,3 +1,4 @@
+using PokerHands;
 using PokerHands.Rules;
 
 namespace PokerHands.Test

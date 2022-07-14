@@ -1,22 +1,22 @@
 using PokerHands;
 using PokerHands.Rules;
 
-namespace PokerRules.Test
+namespace PokerHands.Test
 {
-    public class InvalidHandTests
+    public class ValidHandTests
     {
         [SetUp]
         public void Setup()
         {
         }
         [Test]
-        public void RoyalFlush_InvalidHand()
+        public void RoyalFlush_ValidHand()
         {
             List<Card> cards = new List<Card>()
             {
                 new Card()
                 {
-                    Value = 9,
+                    Value = 10,
                     Suit = Suit.Hearts
                 },
                 new Card()
@@ -45,11 +45,11 @@ namespace PokerRules.Test
 
             bool result = hand.MeetsConditions(cards);
 
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void StraightFlush_InvalidHand()
+        public void StraightFlush_ValidHand()
         {
             List<Card> cards = new List<Card>()
             {
@@ -60,7 +60,7 @@ namespace PokerRules.Test
                 },
                 new Card()
                 {
-                    Value = 3,
+                    Value = 8,
                     Suit = Suit.Diamonds
                 },
                 new Card()
@@ -84,11 +84,128 @@ namespace PokerRules.Test
 
             bool result = hand.MeetsConditions(cards);
 
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void FourOfAKind_InvalidHand()
+        public void FourOfAKind_ValidHand()
+        {
+            List<Card> cards = new List<Card>()
+            {
+                new Card()
+                {
+                    Value = 7,
+                    Suit = Suit.Hearts
+                },
+                new Card()
+                {
+                    Value = 8,
+                    Suit = Suit.Hearts
+                },
+                new Card()
+                {
+                    Value = 7,
+                    Suit = Suit.Clubs
+                },
+                new Card()
+                {
+                    Value = 7,
+                    Suit = Suit.Spades
+                },
+                new Card()
+                {
+                    Value = 7,
+                    Suit = Suit.Diamonds
+                },
+            };
+
+            FourOfAKind hand = new FourOfAKind();
+
+            bool result = hand.MeetsConditions(cards);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void FullHouse_ValidHand()
+        {
+            List<Card> cards = new List<Card>()
+            {
+                new Card()
+                {
+                    Value = 7,
+                    Suit = Suit.Hearts
+                },
+                new Card()
+                {
+                    Value = 8,
+                    Suit = Suit.Hearts
+                },
+                new Card()
+                {
+                    Value = 7,
+                    Suit = Suit.Clubs
+                },
+                new Card()
+                {
+                    Value = 7,
+                    Suit = Suit.Spades
+                },
+                new Card()
+                {
+                    Value = 8,
+                    Suit = Suit.Diamonds
+                },
+            };
+
+            FullHouse hand = new FullHouse();
+
+            bool result = hand.MeetsConditions(cards);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Flush_ValidHand()
+        {
+            List<Card> cards = new List<Card>()
+            {
+                new Card()
+                {
+                    Value = 7,
+                    Suit = Suit.Hearts
+                },
+                new Card()
+                {
+                    Value = 8,
+                    Suit = Suit.Hearts
+                },
+                new Card()
+                {
+                    Value = 2,
+                    Suit = Suit.Hearts
+                },
+                new Card()
+                {
+                    Value = 12,
+                    Suit = Suit.Hearts
+                },
+                new Card()
+                {
+                    Value = 4,
+                    Suit = Suit.Hearts
+                },
+            };
+
+            Flush hand = new Flush();
+
+            bool result = hand.MeetsConditions(cards);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Straight_ValidHand()
         {
             List<Card> cards = new List<Card>()
             {
@@ -109,124 +226,7 @@ namespace PokerRules.Test
                 },
                 new Card()
                 {
-                    Value = 7,
-                    Suit = Suit.Spades
-                },
-                new Card()
-                {
-                    Value = 7,
-                    Suit = Suit.Diamonds
-                },
-            };
-
-            FourOfAKind hand = new FourOfAKind();
-
-            bool result = hand.MeetsConditions(cards);
-
-            Assert.IsFalse(result);
-        }
-
-        [Test]
-        public void FullHouse_InvalidHand()
-        {
-            List<Card> cards = new List<Card>()
-            {
-                new Card()
-                {
-                    Value = 7,
-                    Suit = Suit.Hearts
-                },
-                new Card()
-                {
-                    Value = 8,
-                    Suit = Suit.Hearts
-                },
-                new Card()
-                {
-                    Value = 7,
-                    Suit = Suit.Clubs
-                },
-                new Card()
-                {
-                    Value = 1,
-                    Suit = Suit.Spades
-                },
-                new Card()
-                {
-                    Value = 3,
-                    Suit = Suit.Diamonds
-                },
-            };
-
-            FullHouse hand = new FullHouse();
-
-            bool result = hand.MeetsConditions(cards);
-
-            Assert.IsFalse(result);
-        }
-
-        [Test]
-        public void Flush_InvalidHand()
-        {
-            List<Card> cards = new List<Card>()
-            {
-                new Card()
-                {
-                    Value = 7,
-                    Suit = Suit.Hearts
-                },
-                new Card()
-                {
-                    Value = 8,
-                    Suit = Suit.Clubs
-                },
-                new Card()
-                {
-                    Value = 2,
-                    Suit = Suit.Hearts
-                },
-                new Card()
-                {
-                    Value = 12,
-                    Suit = Suit.Diamonds
-                },
-                new Card()
-                {
-                    Value = 4,
-                    Suit = Suit.Hearts
-                },
-            };
-
-            Flush hand = new Flush();
-
-            bool result = hand.MeetsConditions(cards);
-
-            Assert.IsFalse(result);
-        }
-
-        [Test]
-        public void Straight_InvalidHand()
-        {
-            List<Card> cards = new List<Card>()
-            {
-                new Card()
-                {
-                    Value = 7,
-                    Suit = Suit.Hearts
-                },
-                new Card()
-                {
-                    Value = 8,
-                    Suit = Suit.Hearts
-                },
-                new Card()
-                {
-                    Value = 3,
-                    Suit = Suit.Clubs
-                },
-                new Card()
-                {
-                    Value = 1,
+                    Value = 10,
                     Suit = Suit.Spades
                 },
                 new Card()
@@ -240,11 +240,11 @@ namespace PokerRules.Test
 
             bool result = hand.MeetsConditions(cards);
 
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void ThreeOfAKind_InvalidHand()
+        public void ThreeOfAKind_ValidHand()
         {
             List<Card> cards = new List<Card>()
             {
@@ -260,7 +260,7 @@ namespace PokerRules.Test
                 },
                 new Card()
                 {
-                    Value = 8,
+                    Value = 7,
                     Suit = Suit.Clubs
                 },
                 new Card()
@@ -270,7 +270,7 @@ namespace PokerRules.Test
                 },
                 new Card()
                 {
-                    Value = 12,
+                    Value = 3,
                     Suit = Suit.Diamonds
                 },
             };
@@ -279,11 +279,11 @@ namespace PokerRules.Test
 
             bool result = hand.MeetsConditions(cards);
 
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void TwoPairs_InvalidHand()
+        public void TwoPairs_ValidHand()
         {
             List<Card> cards = new List<Card>()
             {
@@ -294,12 +294,12 @@ namespace PokerRules.Test
                 },
                 new Card()
                 {
-                    Value = 2,
+                    Value = 8,
                     Suit = Suit.Hearts
                 },
                 new Card()
                 {
-                    Value = 5,
+                    Value = 7,
                     Suit = Suit.Clubs
                 },
                 new Card()
@@ -318,11 +318,11 @@ namespace PokerRules.Test
 
             bool result = hand.MeetsConditions(cards);
 
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void OnePair_InvalidHand()
+        public void OnePair_ValidHand()
         {
             List<Card> cards = new List<Card>()
             {
@@ -338,7 +338,7 @@ namespace PokerRules.Test
                 },
                 new Card()
                 {
-                    Value = 1,
+                    Value = 7,
                     Suit = Suit.Clubs
                 },
                 new Card()
@@ -357,7 +357,7 @@ namespace PokerRules.Test
 
             bool result = hand.MeetsConditions(cards);
 
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
     }
 }

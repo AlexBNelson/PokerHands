@@ -4,7 +4,7 @@ using PokerHands.DataAccess;
 
 namespace PokerHands.IntegrationTests
 {
-    public class Tests
+    public class IntegrationTests
     {
         [SetUp]
         public void Setup()
@@ -32,6 +32,7 @@ namespace PokerHands.IntegrationTests
 
 
             var actualPlayer1Wins = winCalculator.CalculateWins(dataRetriever.Object.GetGameData(), ruleGenerator.GenerateRules());
+
 
             var expectedPlayer1Wins = 2;
 

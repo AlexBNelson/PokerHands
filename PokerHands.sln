@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokerHands", "PokerHands\PokerHands.csproj", "{9FE042A4-E54C-42BB-AAE3-50188784CFEA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokerHands.Test", "PokerHands.Test\PokerHands.Test.csproj", "{4B462C66-16D2-4E83-9E46-D260D6203E8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokerHands.UnitTests", "PokerHands.Test\PokerHands.UnitTests.csproj", "{4B462C66-16D2-4E83-9E46-D260D6203E8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerHands.IntegrationTests", "PokerHands.IntegrationTests\PokerHands.IntegrationTests.csproj", "{96644B71-9A0E-4319-B723-3F49A9D09018}"
 EndProject

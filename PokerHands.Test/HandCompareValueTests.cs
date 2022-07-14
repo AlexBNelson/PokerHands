@@ -1,3 +1,5 @@
+using PokerHands.Rules;
+
 namespace PokerHands.Test
 {
     public class RuleCompareValueTests

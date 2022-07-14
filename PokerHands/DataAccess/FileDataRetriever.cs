@@ -1,29 +1,18 @@
 ﻿using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace PokerHands.DataAccess
 {
-    public class FileDataRetriever : IGameDataRetriever
+    public class FileDataRetriever : BaseGameDataRetriever
     {
-        private readonly Dictionary<char, int> cardNumberMap = new() 
+        public FileDataRetriever(string fileUrl) : base(fileUrl)
         {
-            {'A',14},
-            {'T',10},
-            {'J',11},
-            {'Q',12},
-            {'K',13}
-        };
+            
+        }
 
-        private readonly Dictionary<char, Suit> suitAbbreviations = new()
+        public override List<(List<Card>, List<Card>)> GetGameData()
         {
-            { 'C', Suit.Clubs },
-            { 'S', Suit.Spades },
-            { 'H', Suit.Hearts },
-            { 'D', Suit.Diamonds }
-        };
-
-        public List<(List<Card>, List<Card>)> GetGameData()
-        {
-            using var reader = File.OpenText("C:/temp/p054_poker.txt");
+            using var reader = File.OpenText(FileUrl);
 
 
             var lines = new List<string>();
@@ -72,28 +61,9 @@ namespace PokerHands.DataAccess
             return cardData;
         }
 
-        private int ParseCardNumber(char c)
-        {
-            if (int.TryParse(c.ToString(), out var number))
-            {
-                return number;
-            }
-            else
-            {
-                return cardNumberMap[c];
-            }
-        }
-
-        private Suit GetSuitFromChar(char c)
-        {
-            if (suitAbbreviations.ContainsKey(c))
-            {
-                return suitAbbreviations[c];
-            }
-            else
-            {
-                throw new Exception("invalid suit abbreviation");
-            }
-        }
     }
+        
+
+        
+    
 }

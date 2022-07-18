@@ -14,7 +14,7 @@ var config = configuration.Build();
 
 RuleGenerator ruleGenerator = new RuleGenerator();
 
-BaseGameDataRetriever dataRetriever = new WebDataRetriever(config["WebGameDataLocation"]);
+BaseGameDataRetriever dataRetriever = new WebDataRetriever(config["GameDataLocation"]);
 
 WinCalculator winCalculator = new WinCalculator();
 

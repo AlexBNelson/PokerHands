@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using PokerHands;
 using PokerHands.Rules;
 

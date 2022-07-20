@@ -2,30 +2,30 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using PokerHands;
 using PokerHands.DataAccess;
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile($"appsettings.json");
-
-
 var config = configuration.Build();
+
+IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((_, services) =>
+        services.AddScoped<BaseGameDataRetriever, WebDataRetriever>()
+            .AddTransient<WinCalculator>()).Build();
+
+var winCalc = host.Services.CreateScope().ServiceProvider.GetRequiredService<WinCalculator>(); ;
 
 RuleGenerator ruleGenerator = new RuleGenerator();
 
-BaseGameDataRetriever dataRetriever = new WebDataRetriever(config["GameDataLocation"]);
-
-WinCalculator winCalculator = new WinCalculator();
-
-
-
 var rules = ruleGenerator.GenerateRules();
 
-var data = dataRetriever.GetGameData();
 
-
-
-Console.WriteLine(winCalculator.CalculateWins(data, rules));
+Console.WriteLine(winCalc.CalculateWins(rules));
 
 Console.ReadLine();
+
+host.StartAsync();

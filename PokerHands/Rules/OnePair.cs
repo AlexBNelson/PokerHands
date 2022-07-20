@@ -17,8 +17,8 @@
 
         public override GameOutcome CompareValue(List<Card> player1Cards, List<Card> player2Cards)
         {
-            var player1Pair = player1Cards.GroupBy(x => x.Value).Where(g => g.Count() == 2).First().ToList();
-            var player2Pair = player2Cards.GroupBy(x => x.Value).Where(g => g.Count() == 2).First().ToList();
+            var player1Pair = player1Cards.GroupBy(x => x.Value).FirstOrDefault(g => g.Count() == 2).ToList();
+            var player2Pair = player2Cards.GroupBy(x => x.Value).FirstOrDefault(g => g.Count() == 2).ToList();
             
 
             if (player1Pair[0].Value > player2Pair[0].Value)

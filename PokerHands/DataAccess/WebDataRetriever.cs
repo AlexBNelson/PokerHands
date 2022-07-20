@@ -9,11 +9,16 @@ namespace PokerHands.DataAccess
         {
         }
 
+        public WebDataRetriever()
+        {
+            
+        }
+        
         public override List<(List<Card>, List<Card>)> GetGameData()
         {
             var client = new HttpClient();
 
-            var request = client.GetAsync(FileUrl);
+            var request = client.GetAsync("https://projecteuler.net/project/resources/p054_poker.txt");
 
             var response = request.Result;
 

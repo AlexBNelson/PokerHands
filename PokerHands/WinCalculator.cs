@@ -1,11 +1,19 @@
-﻿using PokerHands.Rules;
+﻿using PokerHands.DataAccess;
+using PokerHands.Rules;
 
 namespace PokerHands
 {
     public class WinCalculator
     {
-        public int CalculateWins(List<(List<Card>, List<Card>)> data, List<BaseRule> rules)
+        private BaseGameDataRetriever _dataRetriever;
+        public WinCalculator(BaseGameDataRetriever dataRetriever)
         {
+            _dataRetriever = dataRetriever;
+        }
+        public int CalculateWins(List<BaseRule> rules)
+        {
+            var data = _dataRetriever.GetGameData();
+
             int player1WinCount = 0;
 
             foreach (var play in data)

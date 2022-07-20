@@ -1,12 +1,6 @@
 ﻿namespace PokerHands.Rules
 {
-    public enum GameOutcome
-    {
-        Player1Wins,
-        Player2Wins,
-        Tie
-    }
-    public abstract class BaseRule
+   public abstract class BaseRule
     {
         public virtual int Rank { get; }
         public abstract bool MeetsConditions(List<Card> cards);

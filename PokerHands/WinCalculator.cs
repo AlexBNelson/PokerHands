@@ -14,7 +14,7 @@ namespace PokerHands
 
                 int player2Rank = 0;
 
-                BaseRule? player1Rule = null;
+                BaseRule player1Rule = rules.Last();
 
                 var player1Cards = play.Item1;
 
@@ -47,8 +47,6 @@ namespace PokerHands
                     {
                         player1WinCount++;
                     }
-
-                    
                 }
             }
 

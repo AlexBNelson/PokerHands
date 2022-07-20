@@ -1,72 +1,42 @@
-﻿using System.Net;
-using Microsoft.Extensions.Configuration;
+﻿
+namespace PokerHands.DataAccess;
 
-namespace PokerHands.DataAccess
+public class WebDataRetriever : IGameDataRetriever
 {
-    public class WebDataRetriever : BaseGameDataRetriever
-    {
-        public WebDataRetriever(string fileUrl) : base(fileUrl)
-        {
-        }
+   private readonly IGameDataParser _gameDataParser;
+   private readonly string _url;
 
-        public override List<(List<Card>, List<Card>)> GetGameData()
-        {
-            var client = new HttpClient();
+   public WebDataRetriever(IGameDataParser gameDataParser, string url)
+   {
+      _gameDataParser = gameDataParser;
+      _url = url;
+   }
 
-            var request = client.GetAsync(FileUrl);
+   public async Task<List<(List<Card>, List<Card>)>> GetGameData()
+   {
+      var client = new HttpClient();
 
-            var response = request.Result;
+      var response = await client.GetAsync(_url);
 
-            var content = response.Content;
-            var reader = new StreamReader(content.ReadAsStream());
+      var content = response.Content;
+      var stream = await content.ReadAsStreamAsync();
+      var reader = new StreamReader(stream);
 
 
-            var lines = new List<string>();
+      var lines = new List<string>();
 
-            while (true)
-            {
-                var line = reader.ReadLine();
+      while (true)
+      {
+         var line = reader.ReadLine();
 
-                if (line == null)
-                {
-                    break;
-                }
+         if (line == null)
+         {
+            break;
+         }
 
-                lines.Add(line);
-            }
+         lines.Add(line);
+      }
 
-            return ParseGameDataText(lines);
-        }
-
-        private List<(List<Card>, List<Card>)> ParseGameDataText(List<string> lines)
-        {
-            List<(List<Card>, List<Card>)> cardData = new List<(List<Card>, List<Card>)>();
-            
-            foreach (var line in lines)
-            {
-                List<string> cardCodes = line.Split(" ").ToList();
-
-                List<Card> cards = new List<Card>();
-
-                cardCodes.ForEach(c =>
-                {
-                    cards.Add(new Card()
-                    {
-                        Suit = GetSuitFromChar(c[1]),
-                        Value = ParseCardNumber(c[0])
-                    });
-                });
-
-                var player1Cards = cards.GetRange(0, 5);
-
-                var player2Cards = cards.GetRange(5, 5);
-
-                cardData.Add((player1Cards, player2Cards));
-            }
-
-            return cardData;
-        }
-
-        
-    }
+      return _gameDataParser.ParseGameDataText(lines);
+   }
 }

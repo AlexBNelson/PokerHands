@@ -30,7 +30,8 @@
             FileUrl = "";
         }
 
-        public abstract List<(List<Card>, List<Card>)> GetGameData();
+        //TODO: List of lists
+        public abstract Task<List<(List<Card>, List<Card>)>> GetGameData();
 
         protected int ParseCardNumber(char c)
         {
@@ -55,5 +56,34 @@
                 throw new Exception("invalid suit abbreviation");
             }
         }
-    }
+
+        protected List<(List<Card>, List<Card>)> ParseGameDataText(List<string> lines)
+        {
+           List<(List<Card>, List<Card>)> cardData = new List<(List<Card>, List<Card>)>();
+
+           foreach (var line in lines)
+           {
+              List<string> cardCodes = line.Split(" ").ToList();
+
+              List<Card> cards = new List<Card>();
+
+              cardCodes.ForEach(c =>
+              {
+                 cards.Add(new Card()
+                 {
+                    Suit = GetSuitFromChar(c[1]),
+                    Value = ParseCardNumber(c[0])
+                 });
+              });
+
+              var player1Cards = cards.GetRange(0, 5);
+
+              var player2Cards = cards.GetRange(5, 5);
+
+              cardData.Add((player1Cards, player2Cards));
+           }
+
+           return cardData;
+        }
+   }
 }

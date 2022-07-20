@@ -6,28 +6,19 @@ namespace PokerHands
     {
         public List<BaseRule> GenerateRules()
         {
-            List<BaseRule> hands = new List<BaseRule>();
-
-
-            hands.Add(new RoyalFlush());
-
-            hands.Add(new StraightFlush());
-
-            hands.Add(new FourOfAKind());
-
-            hands.Add(new FullHouse());
-
-            hands.Add(new Flush());
-
-            hands.Add(new Straight());
-
-            hands.Add(new ThreeOfAKind());
-
-            hands.Add(new TwoPairs());
-
-            hands.Add(new OnePair());
-
-            hands.Add(new HighCard());
+            var hands = new List<BaseRule>
+            {
+               new RoyalFlush(),
+               new StraightFlush(),
+               new FourOfAKind(),
+               new FullHouse(),
+               new Flush(),
+               new Straight(),
+               new ThreeOfAKind(),
+               new TwoPairs(),
+               new OnePair(),
+               new HighCard()
+            };
 
             return hands;
 

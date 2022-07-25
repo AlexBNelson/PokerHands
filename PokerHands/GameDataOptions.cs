@@ -9,7 +9,7 @@ namespace PokerHands;
 public class GameDataOptions
 {
    public bool UseLocalGameData { get; set; } = true;
-   public string Title { get; set; } = String.Empty;
-   public string Name { get; set; } = String.Empty;
+   public string WebDataLocation { get; set; } = String.Empty;
+   public string LocalDataLocation { get; set; } = String.Empty;
 
 }

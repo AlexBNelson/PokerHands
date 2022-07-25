@@ -9,10 +9,10 @@ public class WebDataRetriever : IGameDataRetriever
    private readonly IGameDataParser _gameDataParser;
    private readonly string _url;
 
-   public WebDataRetriever(IGameDataParser gameDataParser, string url, IOptions<GameDataOptions> options)
+   public WebDataRetriever(IGameDataParser gameDataParser, IOptions<GameDataOptions> options)
    {
       _gameDataParser = gameDataParser;
-      _url = url;
+      _url = options.Value.WebDataLocation;
    }
 
    public async Task<List<Hands>> GetGameData()

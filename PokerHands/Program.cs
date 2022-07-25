@@ -28,9 +28,10 @@ var host = Host.CreateDefaultBuilder(args)
    })
    .ConfigureServices((context, services) =>
       services
-         .AddScoped<IGameDataRetriever, WebDataRetriever>()
          .AddScoped<IGameDataParser, GameDataParser>()
-         .Configure<GameDataOptions>(context.Configuration))
+         .AddScoped<IGameDataRetriever, WebDataRetriever>()
+         .Configure<GameDataOptions>(context.Configuration)
+         .AddScoped<Game>())
    .Build();
 
 
@@ -50,7 +51,7 @@ var game = host.Services.CreateScope().ServiceProvider.GetRequiredService<Game>(
 
 //TODO: Move all services into game.
 
-Console.WriteLine(game.CalculateWins());
+Console.WriteLine(await game.CalculateWins());
 
 Console.ReadLine();
 

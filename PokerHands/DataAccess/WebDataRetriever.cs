@@ -1,4 +1,7 @@
 ﻿
+using Microsoft.Extensions.Options;
+using PokerHands.Models;
+
 namespace PokerHands.DataAccess;
 
 public class WebDataRetriever : IGameDataRetriever
@@ -6,13 +9,13 @@ public class WebDataRetriever : IGameDataRetriever
    private readonly IGameDataParser _gameDataParser;
    private readonly string _url;
 
-   public WebDataRetriever(IGameDataParser gameDataParser, string url)
+   public WebDataRetriever(IGameDataParser gameDataParser, string url, IOptions<GameDataOptions> options)
    {
       _gameDataParser = gameDataParser;
       _url = url;
    }
 
-   public async Task<List<(List<Card>, List<Card>)>> GetGameData()
+   public async Task<List<Hands>> GetGameData()
    {
       var client = new HttpClient();
 
@@ -27,7 +30,7 @@ public class WebDataRetriever : IGameDataRetriever
 
       while (true)
       {
-         var line = reader.ReadLine();
+         var line = await reader.ReadLineAsync();
 
          if (line == null)
          {

@@ -9,10 +9,10 @@ public class FileDataRetriever : IGameDataRetriever
    private readonly IGameDataParser _gameDataParser;
    private readonly string _fileUrl;
 
-   public FileDataRetriever(IGameDataParser gameDataParser, string fileUrl, IOptions<GameDataOptions> options)
+   public FileDataRetriever(IGameDataParser gameDataParser,  IOptions<GameDataOptions> options)
    {
       _gameDataParser = gameDataParser;
-      _fileUrl = fileUrl;
+      _fileUrl = options.Value.LocalDataLocation;
    }
 
    public Task<List<Hands>> GetGameData()

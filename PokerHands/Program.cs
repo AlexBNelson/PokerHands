@@ -9,35 +9,72 @@ using Microsoft.Extensions.Options;
 using PokerHands;
 using PokerHands.DataAccess;
 
-//var configuration = new ConfigurationBuilder()
-//    .SetBasePath(Directory.GetCurrentDirectory())
-//    .AddJsonFile($"appsettings.json");
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile($"appsettings.json");
 
-//var config = configuration.Build();
+var config = configuration.Build();
 
+Boolean.TryParse(config["UseLocalGameData"], out var useLocalGameData);
 
+GameDataOptions gdOptions = new GameDataOptions();
 
-
-var host = Host.CreateDefaultBuilder(args)
-   .ConfigureAppConfiguration((hostingContext, configurationBuilder) =>
-   {
-      configurationBuilder.Sources.Clear();
-
-      configurationBuilder
-         .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-   })
-   .ConfigureServices((context, services) =>
-      services
-         .AddScoped<IGameDataParser, GameDataParser>()
-         .AddScoped<IGameDataRetriever, WebDataRetriever>()
-         .Configure<GameDataOptions>(context.Configuration)
-         .AddScoped<Game>())
-   .Build();
+IHost host = null;
 
 
-//TODO: Container https://docs.microsoft.com/en-us/dotnet/core/extensions/options
+if (useLocalGameData)
+{
+   host = Host.CreateDefaultBuilder(args)
+      .ConfigureAppConfiguration((hostingContext, configurationBuilder) =>
+      {
+         configurationBuilder.Sources.Clear();
+
+         configurationBuilder
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+      })
+      .ConfigureServices((context, services) =>
+      {
+         services
+            .Configure<GameDataOptions>(context.Configuration)
+            .AddScoped<IGameDataParser, GameDataParser>()
+            .AddScoped<IGameDataRetriever, FileDataRetriever>()
+            .AddScoped<Game>();
+
+
+      })
+      .Build();
+}
+else
+{
+   host = Host.CreateDefaultBuilder(args)
+      .ConfigureAppConfiguration((hostingContext, configurationBuilder) =>
+      {
+         configurationBuilder.Sources.Clear();
+
+         configurationBuilder
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+      })
+      .ConfigureServices((context, services) =>
+      {
+         services
+            .Configure<GameDataOptions>(context.Configuration)
+            .AddScoped<IGameDataParser, GameDataParser>()
+            .AddScoped<IGameDataRetriever, WebDataRetriever>()
+            .AddScoped<Game>();
+
+
+      })
+      .Build();
+}
+
+
+
+//From https://www.c-sharpcorner.com/article/multiple-interface-implementations-in-asp-net-core/
+
 // https://stackoverflow.com/questions/72508316/options-pattern-ioptions-c-sharp-net-6-0-windows-form
 
+
+//TODO: Container https://docs.microsoft.com/en-us/dotnet/core/extensions/
 
 
 
